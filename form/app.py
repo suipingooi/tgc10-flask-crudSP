@@ -18,6 +18,31 @@ def process_login_form():
     print("data recieved")
     return "Welcome, " + username
 
+@app.route('/calculate')
+def show_calc_form():
+    return render_template('calc_form.template.html')
+
+@app.route('/calculate', methods=['POST'])
+def process_calc_form():
+    print(request.form)
+    n1 = int(request.form.get('number1'))
+    n2 = int(request.form.get('number2'))
+    return str(n1 + n2)
+
+@app.route('/bmi')
+def show_bmi_form():
+    return render_template('bmi.template.html')
+
+@app.route('/bmi', methods=['POST'])
+def process_bmi():
+    print(request.form)
+    h = float(request.form.get('height'))
+    w = float(request.form.get('weight'))
+    bmi = round(w/h**2, 2)
+    return render_template('bmi_results.template.html', bmi=bmi)
+
+
+
 # "magic code" -- boilerplate
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
